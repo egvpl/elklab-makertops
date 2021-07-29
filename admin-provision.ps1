@@ -17,12 +17,14 @@ $packages= @(
     "github-desktop",
     "inkscape",
     "kicad",
+    "meshroom",
     "microsoft-windows-terminal",
     "openscad",
     "prusaslicer",
     "putty",
     "python3",
     "rpi-imager",
+    "sourcetree",
     "sublimetext3",
     "synctrayzor",
     "unifying",
@@ -39,14 +41,20 @@ $packages= @(
 # [Chocolatey Documentation](https://docs.chocolatey.org/en-us/) and read 
 # about its many useful [features](https://docs.chocolatey.org/en-us/features/).
 
-Write-Output "Ensuring Chocolatey is installed..."
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+$testchoco = powershell choco -v
+if(-not($testchoco)){
+    Write-Output "Chocolatey not found, installing now"
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+else{
+    Write-Output "Chocolatey version $testchoco is already installed"
+}
 
 Write-Output "Ensuring timeliness of both Chocolatey and its installed packages..."
 choco upgrade -y chocolatey
 choco upgrade -y all
 
-Write-Output "Ensuring proper packages are installed..."
+Write-Output "Ensuring Chocolatey packages are installed..."
 ForEach ($package in $packages) {
     choco install -y $package
 }
