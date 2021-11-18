@@ -1,5 +1,6 @@
 $packages= @(
     "arduino",
+    "autodesk-fusion360",
     "bleachbit",
     "blender",
     "choco-cleaner",
@@ -30,6 +31,8 @@ $packages= @(
     "unifying",
     "vagrant",
     "virtualbox",
+    "vagrant",
+    "windirstat",
     "zoom"
 )
 
